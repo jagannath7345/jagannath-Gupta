@@ -4,21 +4,26 @@ import axios from "axios"
 
 function App() {
     const [query, setQuery] = useState("")
-    const [ads, setAds] = useState([])
-
-    const fetchData = async()=>{
-        const result = await axios.get(`http://localhost:5000/api/search`);
-      
-        console.log(result)
-    }
+    const [data, setData] = useState([])
     useEffect(()=>{
-        fetchData()
-    }, [])
+    const fetchData = async()=>{
+        const result = await axios.get(`http://localhost:5000/api/search?query=${query}`);
+        console.log(result)
+        setData(result.data)
+    }
+       if(query.length === 0 || query.length >2) fetchData()
+    }, [query])
  return(
 
   <>
-  <h1>hello</h1>
-  {/* <Data /> */}
+  <div className="container">
+    <input
+    className="search"
+    placeholder="Search..."
+    onChange={(e) => setQuery(e.target.value)}
+    />
+  </div>
+  <Data data={data} />
   </>
  )
 }

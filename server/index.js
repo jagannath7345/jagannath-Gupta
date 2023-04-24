@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const cors = require("cors")
 const router = require("./routes/routes");
 mongoose
   .connect("mongodb://127.0.0.1:27017/search-db")
@@ -11,6 +12,7 @@ mongoose
     console.log("Connection Failed!");
   });
 app.use("/api", router);
+app.use(cors())
 app.use(express.json());
 app.listen(5000, () => {
   console.log(`Server Runing at 5000`);
